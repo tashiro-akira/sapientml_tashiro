@@ -250,10 +250,10 @@ def test_sapientml_raises_error_if_all_candidates_failed_to_run(testdata_df_ligh
 def test_misc_sapientml_set_logger_handler_only_once():
     logger = setup_logger()
     assert len(logger.handlers) == 1
-    _ = SapientML([""])
+    _ = SapientML(["a"])
     logger = setup_logger()
     assert len(logger.handlers) == 1
-    _ = SapientML([""])
+    _ = SapientML(["a"])
     assert len(logger.handlers) == 1
 
 
@@ -579,6 +579,28 @@ def test_sapientml_works_with_regression_split_stratification(testdata_df_light)
     assert "stratify" not in cls_.generator._best_pipeline.test
 
 
+<<<<<<< HEAD
+=======
+def test_sapientml_works_with_change_none_to_nan():
+    df = pd.DataFrame(
+        {
+            "A": list(range(1, 11)),
+            "B": [None if i % 2 == 0 else "B" for i in range(1, 11)],
+            # It also fails when the value np.nan is included.
+            # "B": [np.nan if i % 2 == 0 else "B" for i in range(1, 11)],
+            "y": ["y" if i % 2 == 0 else "n" for i in range(1, 11)],
+        }
+    )
+
+    sml = SapientML(
+        ["y"],
+        add_explanation=True,
+    )
+
+    sml.fit(df)
+
+
+>>>>>>> remotes/upstream/main
 def test_sapientml_works_with_symbol_column(testdata_df_light):
     col_has_symbol = {"target_number_large_scale": "[target_number]{}:<\\+"}
     testdata_df_light = testdata_df_light.rename(columns=col_has_symbol)
